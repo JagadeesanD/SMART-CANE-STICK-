@@ -1,0 +1,29 @@
+import serial
+import time
+
+def read_serial_data():
+    try:
+        ser = serial.Serial('COM3', 9600) 
+        time.sleep(2) 
+        while True:
+            data = ser.readline().decode('utf-8').rstrip()
+            if data:
+                distance = float(data)
+                print(f"Distance: {distance} cm")
+                return distance
+    except KeyboardInterrupt:
+        ser.close()
+
+def alert_user():
+    print("Object detected! Be cautious.")
+
+def main():
+    while True:
+        distance = read_serial_data()
+        if distance <= 30:  
+            alert_user()
+
+if __name__ == "__main__":
+    main()
+
+#SMART CANE STICK CODE IN THE PYTHON
